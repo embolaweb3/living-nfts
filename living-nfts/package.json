@@ -1,0 +1,32 @@
+{
+  "name": "living-nfts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@wagmi/core": "^2.16.7",
+    "@zoralabs/protocol-sdk": "^0.13.4",
+    "@zoralabs/zora-1155-contracts": "^2.13.2",
+    "axios": "^1.8.4",
+    "ethers": "^6.13.5",
+    "next": "15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sharp": "^0.34.0",
+    "view": "^1.1.1",
+    "wagmi": "^2.14.16"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20.17.30",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
