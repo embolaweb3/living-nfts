@@ -1,6 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { updateTokenURI, } from '../lib/zora';
-import { evolveNFT } from '../lib/ai';
+import { create } from 'ipfs-http-client';
+import { getToken } from "@zoralabs/protocol-sdk";
+import { publicClient } from '../lib/config';
+
+// Connect to Infura IPFS 
+const ipfs = create({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https',
+  headers: {
+    authorization: `Basic ${Buffer.from(
+      `${process.env.NEXT_PUBLIC_INFURA_IPFS_ID}:${process.env.NEXT_PUBLIC_INFURA_IPFS_SECRET}`
+    ).toString('base64')}`
+  }
+});
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,19 +21,49 @@ export default async function handler(
 ) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { contractAddress, tokenId, trigger } = req.body;
+  const { contractAddress, currentTokenId, trigger } = req.body;
 
   try {
-    // 1. Generate new art
-    const currentURI = await getCurrentTokenURI(contractAddress, tokenId);
-    const newImage = await evolveNFT(currentURI, trigger);
-    
-    // 2. Update on-chain
-    await updateTokenURI(contractAddress, newImage);
-    
-    res.status(200).json({ success: true, newImage });
+    // 1. Generate new metadata
+    const newMetadata = {
+      name: `Evolved NFT #${currentTokenId}`,
+      description: "Dynamically evolved NFT",
+      image: "image.com",
+      attributes: [
+        { trait_type: "Evolution", value: trigger },
+        { trait_type: "Original", value: currentTokenId }
+      ]
+    };
+
+    // 2. Upload to IPFS directly
+    const { cid } = await ipfs.add(JSON.stringify(newMetadata));
+    const newURI = `ipfs://${cid}`;
+
+    // 3. Prepare mint (Zora 1155)
+    const tokenData = await getToken({
+      tokenContract: contractAddress as `0x${string}`,
+      mintType: "1155",
+      publicClient
+    });
+
+    // Ensure prepareMint exists before calling it
+    if (!tokenData.prepareMint) {
+      return res.status(500).json({ error: "prepareMint function is undefined" });
+    }
+
+    const { parameters } = tokenData.prepareMint({
+      minterAccount: req.headers.walletaddress as `0x${string}`, 
+      quantityToMint: BigInt(1)
+    });
+
+    res.status(200).json({
+      newTokenId: Number(currentTokenId) + 1,
+      newURI,
+      txParams: parameters
+    });
+
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Evolution failed" });
+    console.error("Evolution error:", error);
+    res.status(500).json({ error: error instanceof Error ? error.message : "Evolution failed" });
   }
 }
