@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🌐 Live Demo (NOT YET DEPLOYED, STILL IN DEVELOPMENT STAGE)
 
-## Getting Started
 
-First, run the development server:
+```markdown
+# 🌱 LivingNFTs
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**AI-Evolving Digital Collectibles on Zora Protocol**  
+*NFTs that grow, adapt, and respond to the world around them*
+
+[![Built with Zora SDK](https://img.shields.io/badge/powered_by-Zora_Protocol-blue)](https://docs.zora.co)
+
+
+## ✨ Features
+
+- **Dynamic Evolution**  
+  NFTs change appearance based on:
+  - Crypto market trends (ETH price)
+  - Real-world weather data
+  - Time-based triggers
+
+- **AI-Powered Art**  
+  Uses Stable Diffusion to generate unique evolved versions
+
+- **On-Chain Provenance**  
+  Full history of evolutions stored on Zora protocol
+
+- **Collector Engagement**  
+  Earn royalties when your evolved NFTs are traded
+
+## 🛠 Tech Stack
+
+| Layer               | Technology                          |
+|---------------------|-------------------------------------|
+| **Blockchain**      | Zora Protocol, ERC-1155             |
+| **AI**              | Stable Diffusion, Replicate API     |
+| **Frontend**        | Next.js, Tailwind CSS               |
+| **Wallet**          | RainbowKit, Wagmi                   |
+| **Storage**         | IPFS (via NFT.Storage)              |
+| **Oracles**         | Chainlink (ETH price), WeatherAPI   |
+
+## 🚀 Quick Start
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Set environment variables**  
+   Create `.env.local`:
+   ```env
+   NEXT_PUBLIC_ZORA_CONTRACT_ADDRESS=0xYourAddress
+   REPLICATE_API_KEY=your_key
+   WEATHERAPI_KEY=your_key
+   ```
+
+3. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+## 📖 Documentation
+
+### Key Components
+
+| File                | Purpose                                |
+|---------------------|----------------------------------------|
+| `/api/evolve.ts`    | Handles NFT evolution logic            |
+| `lib/zora.ts`       | Zora SDK interactions                  |
+| `components/NFTDisplay.tsx` | Animated evolution UI            |
+
+
+
+## 🏆 Hackathon Highlights
+
+- **Innovation**: First NFTs with real-time AI evolution
+- **Zora Integration**: Full protocol SDK utilization
+- **User Experience**: Seamless wallet-to-evolution flow
+
+
+## 📜 License
+
+
+---
+
+**Made with ❤️ for the Zora Hackathon**  
+[![Zora Logo](https://zora.co/favicon.ico)](https://zora.co)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
